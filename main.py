@@ -10,7 +10,7 @@ from telebot import types
 token = open("config", "r").read()
 group_id = open("group_id", "r").read().split()
 
-bot = telebot.Telebot(token)
+bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['goodnight'])
 def goodnight(message):
