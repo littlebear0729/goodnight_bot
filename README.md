@@ -1,5 +1,5 @@
 # goodnight_bot
-## 一个不止可以道晚安的bot
+## 一个在特定群组内，不止可以道晚安的bot
 
 Telegram bot：@goodnight_prpr_bot
 
