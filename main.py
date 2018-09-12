@@ -19,24 +19,24 @@ def greeting(message):
 	if str(message.chat.id) in group_id:
 		c_time = time.time() + 28800
 		c_time = int(c_time % 86400 // 3600)
-		if 0<=c_time<4:
+		if 0<=c_time<5:
 			txt = "晚安"
-		elif 4<=c_time<10:
+		elif 5<=c_time<11:
 			txt = "早上好"
-		elif 10<=c_time<15:
+		elif 11<=c_time<14:
 			txt = "中午好"
-		elif 15<=c_time<18:
+		elif 14<=c_time<18:
 			txt = "下午好"
-		elif 18<=c_time<21:
+		elif 18<=c_time<22:
 			txt = "晚上好"
-		elif 21<=c_time<24:
+		elif 22<=c_time<24:
 			txt = "晚安"
 		send_name = str(message.from_user.first_name)
 		if message.reply_to_message == None:
-			txt = send_name + "向大家道" + txt + "～"
+			txt = send_name + " 向 大家 道" + txt + "～"
 		else:
 			reply_name = str(message.reply_to_message.from_user.first_name)
-			txt = send_name + "向" + reply_name + "道" + txt + "～ @" + message.reply_to_message.from_user.username
+			txt = send_name + " 向 " + reply_name + " 道 " + txt + "～ @" + message.reply_to_message.from_user.username
 		bot.send_message(message.chat.id, txt)
 		bot.delete_message(message.chat.id, message.message_id)
 
