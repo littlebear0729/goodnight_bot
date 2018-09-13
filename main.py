@@ -36,7 +36,12 @@ def greeting(message):
 			txt = send_name + " 向 大家 道" + txt + "～"
 		else:
 			reply_name = str(message.reply_to_message.from_user.first_name)
-			txt = send_name + " 向 " + reply_name + " 道 " + txt + "～ @" + message.reply_to_message.from_user.username
+			if message.reply_to_message.from_user.username == None:
+				txt = send_name + " 向 " + reply_name + " 道 " + txt + "～"
+			else:
+				txt = send_name + " 向 " + reply_name + " 道 " + txt + "～ @" + message.reply_to_message.from_user.username
+			if message.reply_to_message.from_user.username == "goodnight_prpr_bot":
+				txt = "不需要 给窝 道 打招呼 啦～" 
 		bot.send_message(message.chat.id, txt)
 		bot.delete_message(message.chat.id, message.message_id)
 
