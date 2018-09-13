@@ -20,7 +20,9 @@ Telegram bot：@goodnight_prpr_bot
 
 ### bot的bug
 1. 由于服务器性能和线路原因，bot的反应速度超级慢……暂无解决方法
-2. 不知道，如果有的话，请tg联系我 @LittleBear0729
+2. 回复一个没有username的用户的话，机器人无法应答
+3. 回复机器人自己，会自己给自己打招呼
+4. 其他的bug请tg告知 @LittleBear0729
 
 ### bot的feature
 1. 可以按照时间自动改变问好内容
