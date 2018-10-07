@@ -16,7 +16,7 @@ Telegram bot：@goodnight_prpr_bot
 > python3 main.py
 
 ### 进程守护
-推荐使用systems进行进程守护，详询Google
+推荐使用systemd进行进程守护，详询Google
 
 ### bot的bug
 1. 由于服务器性能和线路原因，bot的反应速度超级慢……暂无解决方法
