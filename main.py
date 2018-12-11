@@ -11,12 +11,10 @@ from telebot import types
 
 
 bot = telebot.TeleBot("REPLACE YOUR TOKEN HERE")
-group_id = open("group_id", "r").read().split()
 
-@bot.message_handler(commands=['greeting'])
-def greeting(message):
-	print(message.chat.id)
-	if str(message.chat.id) in group_id:
+try:
+	@bot.message_handler(commands=['greeting'])
+	def greeting(message):
 		c_time = time.time() + 28800
 		c_time = int(c_time % 86400 // 3600)
 		if 0<=c_time<5:
@@ -45,5 +43,8 @@ def greeting(message):
 		bot.send_message(message.chat.id, txt)
 		bot.delete_message(message.chat.id, message.message_id)
 
-
-bot.polling(none_stop=True)
+	bot.polling(none_stop=True)
+except KeyboardInterrupt:
+    quit()
+except Exception as e:
+    print(str(e))
