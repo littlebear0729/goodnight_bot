@@ -46,4 +46,4 @@ def greeting(message):
 		bot.delete_message(message.chat.id, message.message_id)
 
 
-bot.polling()
+bot.polling(none_stop=True)
