@@ -9,8 +9,14 @@ import telebot
 import time
 from telebot import types
 
+# read config from config.json
+with open('./config.json', 'r+') as config_file:
+    config = json.load(config_file)
+    print('Config file load successfully:\n' + str(config))
+    bot_token = config['bot_token']
+
 # bot token
-bot = telebot.TeleBot("REPLACE YOUR TOKEN HERE")
+bot = telebot.TeleBot(bot_token)
 
 # custom nickname by detect userID
 custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099]
