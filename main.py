@@ -28,7 +28,7 @@ try:
 
 		# if not reply to anyone
 		if message.reply_to_message == None:
-			txt = send_name + " 向 大家 拜年啦！"
+			txt = send_name + " 给 大家 拜年啦！"
 		else:
 			# if it is a reply message
 			# if nickname recorded
@@ -38,7 +38,7 @@ try:
 				reply_name = str(message.reply_to_message.from_user.first_name)
 			# if reply_to user doesn't have username
 			if message.reply_to_message.from_user.username == None:
-				txt = send_name + " 向 " + reply_name + " 拜年啦！"
+				txt = send_name + " 给 " + reply_name + " 拜年啦！"
 			# if you reply to yourself
 			elif message.from_user.id == message.reply_to_message.from_user.id:
 				txt = "我 给 我 自 己 拜 年" 
@@ -47,7 +47,7 @@ try:
 				txt = "同喜同喜 同乐同乐！" 
 			# common reply
 			else:
-				txt = send_name + " 向 " + reply_name + " 拜年啦！ @" + message.reply_to_message.from_user.username
+				txt = send_name + " 给 " + reply_name + " 拜年啦！ @" + message.reply_to_message.from_user.username
 		# send reply and delete command message
 		bot.send_message(message.chat.id, txt)
 		bot.delete_message(message.chat.id, message.message_id)
