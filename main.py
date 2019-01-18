@@ -19,23 +19,6 @@ custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'Yunhao']
 try:
 	@bot.message_handler(commands=['greeting'])
 	def greeting(message):
-		# get local time
-		c_time = time.time() + 28800
-		c_time = int(c_time % 86400 // 3600)
-
-		# change greeting text depend on time
-		if 0<=c_time<5:
-			txt = "晚安"
-		elif 5<=c_time<11:
-			txt = "早上好"
-		elif 11<=c_time<14:
-			txt = "中午好"
-		elif 14<=c_time<18:
-			txt = "下午好"
-		elif 18<=c_time<22:
-			txt = "晚上好"
-		elif 22<=c_time<24:
-			txt = "晚安"
 
 		# if nickname recorded
 		if message.from_user.id in custom_userid:
@@ -45,7 +28,7 @@ try:
 
 		# if not reply to anyone
 		if message.reply_to_message == None:
-			txt = send_name + " 向 大家 道" + txt + "～"
+			txt = send_name + " 向 大家 拜年啦！"
 		else:
 			# if it is a reply message
 			# if nickname recorded
@@ -55,16 +38,16 @@ try:
 				reply_name = str(message.reply_to_message.from_user.first_name)
 			# if reply_to user doesn't have username
 			if message.reply_to_message.from_user.username == None:
-				txt = send_name + " 向 " + reply_name + " 道 " + txt + "～"
+				txt = send_name + " 向 " + reply_name + " 拜年啦！"
 			# if you reply to yourself
 			elif message.from_user.id == message.reply_to_message.from_user.id:
-				txt = "我 给 我 自 己 打 招 呼" 
+				txt = "我 给 我 自 己 拜 年" 
 			# if you reply to the bot
 			elif message.reply_to_message.from_user.username == "goodnight_prpr_bot":
-				txt = "不需要 给窝 道 打招呼 啦～" 
+				txt = "同喜同喜 同乐同乐！" 
 			# common reply
 			else:
-				txt = send_name + " 向 " + reply_name + " 道 " + txt + "～ @" + message.reply_to_message.from_user.username
+				txt = send_name + " 向 " + reply_name + " 拜年啦！ @" + message.reply_to_message.from_user.username
 		# send reply and delete command message
 		bot.send_message(message.chat.id, txt)
 		bot.delete_message(message.chat.id, message.message_id)
