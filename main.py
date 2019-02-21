@@ -74,7 +74,7 @@ try:
 				txt = send_name + " 向 " + reply_name + " 道 " + txt + "～ @" + message.reply_to_message.from_user.username
 		# send reply and delete command message
 		bot.send_message(message.chat.id, txt)
-		bot.delete_message(message.chat.id, message.message_id)
+		# bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
 # catch exception
