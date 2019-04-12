@@ -21,7 +21,7 @@ bot = telebot.TeleBot(bot_token)
 
 # custom nickname by detect userID
 custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099]
-custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'Yunhao']
+custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'mashiro']
 
 try:
 	@bot.message_handler(commands=['greeting'])
@@ -34,7 +34,7 @@ try:
 		if 0<=c_time<5:
 			txt = "晚安"
 		elif 5<=c_time<11:
-			txt = "早上好"
+			txt = "早...什么早！我爱你！"
 		elif 11<=c_time<14:
 			txt = "中午好"
 		elif 14<=c_time<18:
