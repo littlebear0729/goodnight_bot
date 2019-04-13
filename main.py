@@ -52,7 +52,7 @@ try:
 
 		# if not reply to anyone
 		if message.reply_to_message == None:
-			txt = send_name + " 向 大家 道 " + txt + "～"
+			txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 大家 道 " + txt + "～"
 		else:
 			# if it is a reply message
 			# if nickname recorded
@@ -73,7 +73,7 @@ try:
 
 		# send reply and delete command message
 		bot.reply_to(message, txt, parse_mode="Markdown")
-		# bot.delete_message(message.chat.id, message.message_id)
+		bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
 # catch exception
