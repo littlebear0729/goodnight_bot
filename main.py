@@ -34,7 +34,7 @@ try:
 		if 0<=c_time<5:
 			txt = "晚安"
 		elif 5<=c_time<11:
-			txt = "早...什么早！我爱你！"
+			txt = "早安"
 		elif 11<=c_time<14:
 			txt = "中午好"
 		elif 14<=c_time<18:
