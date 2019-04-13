@@ -60,7 +60,8 @@ try:
 				reply_name = custom_nickname[custom_userid.index(message.reply_to_message.from_user.id)]
 			else:
 				reply_name = str(message.reply_to_message.from_user.first_name)
-			reply_id = message.reply_to_message.from_user.id
+			from_id = str(message.from_user.id)
+			reply_id = str(message.reply_to_message.from_user.id)
 			# if you reply to yourself
 			if message.from_user.id == message.reply_to_message.from_user.id:
 				txt = "我 给 我 自 己 打 招 呼" 
@@ -68,7 +69,7 @@ try:
 			elif message.reply_to_message.from_user.username == "goodnight_prpr_bot":
 				txt = "不需要 给窝 打招呼 啦～"
 			else:
-				txt = send_name + " 向 [" + reply_name + "](tg://user?id=" + str(reply_id) + ") 道 " + txt + "～"
+				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 
 		# send reply and delete command message
 		bot.reply_to(message, txt, parse_mode="Markdown")
