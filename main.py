@@ -52,7 +52,7 @@ try:
 
 		# if not reply to anyone
 		if message.reply_to_message == None:
-			txt = send_name + " 向 大家 道" + txt + "～"
+			txt = send_name + " 向 大家 道 " + txt + "～"
 		else:
 			# if it is a reply message
 			# if nickname recorded
