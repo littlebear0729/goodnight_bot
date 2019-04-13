@@ -61,6 +61,7 @@ try:
 			else:
 				reply_name = str(message.reply_to_message.from_user.first_name)
 			reply_id = message.reply_to_message.from_user.id
+			print(reply_id)
 			# if reply_to user doesn't have username
 			if message.reply_to_message.from_user.username == None:
 				txt = send_name + " 向 [" + reply_name + "]" + "(tg://user?id=" + reply_id + ") 道 " + txt + "～"
@@ -69,8 +70,9 @@ try:
 				txt = "我 给 我 自 己 打 招 呼" 
 			# if you reply to the bot
 			elif message.reply_to_message.from_user.username == "goodnight_prpr_bot":
-				txt = "不需要 给窝 道 打招呼 啦～" 
+				txt = "不需要 给窝 打招呼 啦～" 
 		# send reply and delete command message
+		print(txt)
 		bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		# bot.delete_message(message.chat.id, message.message_id)
 
