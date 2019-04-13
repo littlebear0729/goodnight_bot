@@ -51,7 +51,7 @@ try:
 			send_name = str(message.from_user.first_name)
 
 		from_id = str(message.from_user.id)
-		
+
 		# if not reply to anyone
 		if message.reply_to_message == None:
 			txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 大家 道 " + txt + "～"
@@ -70,10 +70,15 @@ try:
 			elif message.reply_to_message.from_user.username == "goodnight_prpr_bot":
 				txt = "不需要 给窝 打招呼 啦～"
 			else:
-				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
+				txt = "早安"
+				if txt == "早安":
+					bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
+					txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
+				else:
+					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 
 		# send reply and delete command message
-		bot.reply_to(message, txt, parse_mode="Markdown")
+		bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
