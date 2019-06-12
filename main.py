@@ -63,19 +63,11 @@ try:
 			else:
 				reply_name = str(message.reply_to_message.from_user.first_name)
 			reply_id = str(message.reply_to_message.from_user.id)
-			# if you reply to yourself
-			if message.from_user.id == message.reply_to_message.from_user.id:
-				txt = "我 给 我 自 己 打 招 呼" 
-			# if you reply to the bot
-			elif message.reply_to_message.from_user.username == "goodnight_prpr_bot":
-				txt = "不需要 给窝 打招呼 啦～"
+			if txt == "早安":
+				bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
+				txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
 			else:
-				if txt == "早安":
-					bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
-					txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
-				else:
-					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
-
+				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 		# send reply and delete command message
 		bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		bot.delete_message(message.chat.id, message.message_id)
