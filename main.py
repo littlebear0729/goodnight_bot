@@ -8,6 +8,7 @@ sys.path.append("/usr/local/lib/python3.5/dist-packages")
 import telebot
 import json
 import time
+import random
 from telebot import types
 
 # read config from config.json
@@ -22,6 +23,7 @@ bot = telebot.TeleBot(bot_token)
 # custom nickname by detect userID
 custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099, 254030480, 73322551]
 custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'mashiro', 'KingCapri', '柯柯']
+random_stickers = ['CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI']
 
 try:
 	@bot.message_handler(commands=['greeting'])
@@ -55,6 +57,7 @@ try:
 		# if not reply to anyone
 		if message.reply_to_message == None:
 			txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 大家 道 " + txt + "～"
+			bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		else:
 			# if it is a reply message
 			# if nickname recorded
@@ -64,12 +67,20 @@ try:
 				reply_name = str(message.reply_to_message.from_user.first_name)
 			reply_id = str(message.reply_to_message.from_user.id)
 			if txt == "早安":
-				bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
-				txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
+				randNum = random.randint(0, 100)
+				if randNum % 17 == 0:
+					bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
+					txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
+				else:
+					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 			else:
+				randNum = random.randint(0, 100)
+				if randNum % 23 == 0:
+					randStick = random.randint(0, len(random_stickers) - 1)
+					bot.send_sticker(message.chat_id, random_stickers[randStick])
 				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 		# send reply and delete command message
-		bot.send_message(message.chat.id, txt, parse_mode="Markdown")
+			bot.reply_to(message.reply_to_message.id, txt, parse_mode="Markdown")
 		bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
