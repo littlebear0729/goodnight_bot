@@ -20,8 +20,8 @@ with open('./config.json', 'r+') as config_file:
 bot = telebot.TeleBot(bot_token)
 
 # custom nickname by detect userID
-custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099]
-custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'mashiro']
+custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099, 254030480, 73322551]
+custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'mashiro', 'KingCapri', '柯柯']
 
 try:
 	@bot.message_handler(commands=['greeting'])
