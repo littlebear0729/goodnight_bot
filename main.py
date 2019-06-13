@@ -23,7 +23,7 @@ bot = telebot.TeleBot(bot_token)
 # custom nickname by detect userID
 custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099, 254030480, 73322551]
 custom_nickname = ['小熊', 'Lore酱', '47', '47', '荔枝', 'mashiro', 'KingCapri', '柯柯']
-random_stickers = ['CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI']
+random_stickers = ['CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI', 'CAADBQADOAYAAvjGxQrGnfgTD5nfwQI']
 
 try:
 	@bot.message_handler(commands=['greeting'])
@@ -68,19 +68,19 @@ try:
 			reply_id = str(message.reply_to_message.from_user.id)
 			if txt == "早安":
 				randNum = random.randint(0, 100)
-				if randNum % 17 == 0:
+				if randNum % 6 == 0:
 					bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
 					txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
 				else:
 					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 			else:
 				randNum = random.randint(0, 100)
-				if randNum % 23 == 0:
+				if randNum % 6 == 0:
 					randStick = random.randint(0, len(random_stickers) - 1)
 					bot.send_sticker(message.chat_id, random_stickers[randStick])
 				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 		# send reply and delete command message
-			bot.reply_to(message.reply_to_message.id, txt, parse_mode="Markdown")
+			bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 		bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
