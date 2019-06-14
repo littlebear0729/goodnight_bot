@@ -74,18 +74,22 @@ try:
 					txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
 				else:
 					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
+			# send reply and delete command message
+			bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 			if txt == "睡觉":
 				randReminder = random.randint(0, len(sleep_reminder) - 1)
 				txt = sleep_reminder[randReminder]
+			# send reply and delete command message
+			bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 			else:
 				randNum = random.randint(0, 100)
 				if randNum % 6 == 0:
 					randStick = random.randint(0, len(random_stickers) - 1)
 					bot.send_sticker(message.chat.id, random_stickers[randStick])
 				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
-		# send reply and delete command message
-			bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
-		bot.delete_message(message.chat.id, message.message_id)
+				# send reply and delete command message
+				bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
+		# bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
 # catch exception
