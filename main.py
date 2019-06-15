@@ -74,7 +74,7 @@ try:
 						bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
 						txt = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～".format(reply_name=reply_name, reply_id=reply_id, send_name=send_name, from_id=from_id)
 					else:
-						txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id)
+						txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id, txt=txt)
 						# send reply and delete command message
 						bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 				if txt == "睡觉":
@@ -87,7 +87,7 @@ try:
 					if randNum % 6 == 0:
 						randStick = random.randint(0, len(random_stickers) - 1)
 						bot.send_sticker(message.chat.id, random_stickers[randStick])
-					txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id)
+					txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id, txt=txt)
 					# send reply and delete command message
 					bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 		# bot.delete_message(message.chat.id, message.message_id)
