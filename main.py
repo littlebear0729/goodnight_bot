@@ -61,34 +61,35 @@ try:
 			bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		else:
 			# if it is a reply message
-			# if nickname recorded
-			if message.reply_to_message.from_user.id in custom_userid:
-				reply_name = custom_nickname[custom_userid.index(message.reply_to_message.from_user.id)]
-			else:
-				reply_name = str(message.reply_to_message.from_user.first_name)
-			reply_id = str(message.reply_to_message.from_user.id)
-			if txt == "早安":
-				randNum = random.randint(0, 100)
-				if randNum % 6 == 0:
-					bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
-					txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
+			if not message.from_user.id == message.reply_to_message.from_user.id and not message.reply_to_message.from_user.username == "goodnight_prpr_bot":
+				# if nickname recorded
+				if message.reply_to_message.from_user.id in custom_userid:
+					reply_name = custom_nickname[custom_userid.index(message.reply_to_message.from_user.id)]
 				else:
+					reply_name = str(message.reply_to_message.from_user.first_name)
+				reply_id = str(message.reply_to_message.from_user.id)
+				if txt == "早安":
+					randNum = random.randint(0, 100)
+					if randNum % 6 == 0:
+						bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
+						txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
+					else:
+						txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
+						# send reply and delete command message
+						bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
+				if txt == "睡觉":
+					randReminder = random.randint(0, len(sleep_reminder) - 1)
+					txt = sleep_reminder[randReminder]
+					# send reply and delete command message
+					bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
+				else:
+					randNum = random.randint(0, 100)
+					if randNum % 6 == 0:
+						randStick = random.randint(0, len(random_stickers) - 1)
+						bot.send_sticker(message.chat.id, random_stickers[randStick])
 					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
 					# send reply and delete command message
 					bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
-			if txt == "睡觉":
-				randReminder = random.randint(0, len(sleep_reminder) - 1)
-				txt = sleep_reminder[randReminder]
-				# send reply and delete command message
-				bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
-			else:
-				randNum = random.randint(0, 100)
-				if randNum % 6 == 0:
-					randStick = random.randint(0, len(random_stickers) - 1)
-					bot.send_sticker(message.chat.id, random_stickers[randStick])
-				txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
-				# send reply and delete command message
-				bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 		# bot.delete_message(message.chat.id, message.message_id)
 
 	bot.polling(none_stop=True)
