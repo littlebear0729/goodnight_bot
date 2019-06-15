@@ -57,7 +57,7 @@ try:
 
 		# if not reply to anyone
 		if message.reply_to_message == None:
-			txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 大家 道 " + txt + "～"
+			txt = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(send_name=send_name, from_id=from_id, txt=txt)
 			bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		else:
 			# if it is a reply message
@@ -72,9 +72,9 @@ try:
 					randNum = random.randint(0, 100)
 					if randNum % 6 == 0:
 						bot.send_sticker(message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI")
-						txt = "[" + reply_name + "](tg://user?id=" + reply_id + ")～ [" + send_name + "](tg://user?id=" + from_id + ") 爱你哦～"
+						txt = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～".format(reply_name=reply_name, reply_id=reply_id, send_name=send_name, from_id=from_id)
 					else:
-						txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
+						txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id)
 						# send reply and delete command message
 						bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 				if txt == "睡觉":
@@ -87,7 +87,7 @@ try:
 					if randNum % 6 == 0:
 						randStick = random.randint(0, len(random_stickers) - 1)
 						bot.send_sticker(message.chat.id, random_stickers[randStick])
-					txt = "[" + send_name + "](tg://user?id=" + from_id + ") 向 [" + reply_name + "](tg://user?id=" + reply_id + ") 道 " + txt + "～"
+					txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id)
 					# send reply and delete command message
 					bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
 		# bot.delete_message(message.chat.id, message.message_id)
