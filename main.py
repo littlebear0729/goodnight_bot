@@ -77,7 +77,7 @@ try:
 						txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(send_name=send_name, from_id=from_id, reply_name=reply_name, reply_id=reply_id, txt=txt)
 						# send reply and delete command message
 						bot.reply_to(message.reply_to_message, txt, parse_mode="Markdown")
-				if txt == "睡觉":
+				elif txt == "睡觉":
 					randReminder = random.randint(0, len(sleep_reminder) - 1)
 					txt = sleep_reminder[randReminder]
 					# send reply and delete command message
