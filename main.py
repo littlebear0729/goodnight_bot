@@ -3,8 +3,6 @@
 
 import os
 import sys
-sys.path.append("/usr/local/python3.6/lib/python3.6/site-packages")
-sys.path.append("/usr/local/lib/python3.5/dist-packages")
 import telebot
 import json
 import time
@@ -21,10 +19,10 @@ with open('./config.json', 'r+') as config_file:
 bot = telebot.TeleBot(bot_token)
 
 # custom nickname by detect userID
-custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099, 254030480, 73322551, 137105537]
-custom_nickname = ['小熊', 'Lore酱 | ☆可爱 verified by LittleBear', '47', '47', '荔枝', 'mashiro', 'KingCapri', '柯柯', '成本']
+custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099, 254030480, 73322551, 137105537, 557153656]
+custom_nickname = ['小熊', 'Lore酱 | ☆可爱 verified by LittleBear', '47', '47', '荔枝', 'mashiro', 'KingCapri', '柯柯', '成本', '妹抖喵四']
 random_stickers = ['CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI', 'CAADBQADOAYAAvjGxQrGnfgTD5nfwQI']
-sleep_reminder = ['您还没有睡觉吗？', '快去睡觉了啦！', '她已经睡着了喔…', '对方已经是守夜冠军了！', '你这么寂寞的嘛…', '[Google搜索：失眠怎么办](https://www.google.com/search?q=失眠怎么办)']
+sleep_reminder = ['小可爱还没有睡觉吗？', '快去睡觉了啦！', '她已经睡着了喔…', '你的小可爱已经是守夜冠军了！']
 
 try:
 	@bot.message_handler(commands=['greeting'])
