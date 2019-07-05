@@ -78,8 +78,8 @@ try:
 				if randNum % 5 == 0:
 					bot.send_message(message.chat.id, '下面我宣布！[{send_name}](tg://user?id={from_id}) 是守夜冠军啦！'.format(send_name=send_name, from_id=from_id))
 					bot.send_document(message.chat.id, 'CgADBQADkAADdcmxV9tAyTZinfacAg')
-			else:
-				txt = '晚安'
+				else:
+					txt = '晚安'
 			txt = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(send_name=send_name, from_id=from_id, txt=txt)
 			bot.send_message(message.chat.id, txt, parse_mode="Markdown")
 		else:
