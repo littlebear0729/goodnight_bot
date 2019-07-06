@@ -118,13 +118,20 @@ try:
 	@bot.inline_handler(func=lambda query: True)
 	def query_text(inline_query):
 		try:
+			print(inline_query)
 			send_name, from_id = get_sender_name_and_id(inline_query)
 			txt = get_time()
 			if txt == '睡觉':
 				txt = '晚安'
-			txt = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(send_name=send_name, from_id=from_id, txt=txt)
-			greeting = types.InlineQueryResultArticle('1', '向大家问好', types.InputTextMessageContent(txt, parse_mode="Markdown"))
-			bot.answer_inline_query(inline_query.id, [greeting], cache_time=0, is_personal=False)
+			txt1 = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(send_name=send_name, from_id=from_id, txt=txt)
+			greeting1 = types.InlineQueryResultArticle('1', '向大家问好', types.InputTextMessageContent(txt1, parse_mode="Markdown"))
+			if len(inline_query.query) != 0:
+				if inline_query.query[0] == '@':
+					txt2 = "{send_name} 向 {reply_name} 道 {txt}～".format(send_name=send_name, reply_name=inline_query.query, txt=txt)
+					greeting2 = types.InlineQueryResultArticle('2', '向{reply_name}问好'.format(reply_name=inline_query.query), types.InputTextMessageContent(txt2))
+					bot.answer_inline_query(inline_query.id, [greeting1, greeting2], cache_time=0, is_personal=False)
+			else:
+				bot.answer_inline_query(inline_query.id, [greeting1], cache_time=0, is_personal=False)
 		except Exception as e:
 			print(e)
 	
