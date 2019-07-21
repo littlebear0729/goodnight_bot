@@ -3,7 +3,7 @@
 
 Telegram bot：@goodnight_prpr_bot
 
-注意：请授予机器人admin的`delete message`权限，否则自动删除命令功能将无法使用！
+~~注意：请授予机器人admin的`delete message`权限，否则自动删除命令功能将无法使用！~~
 当然，如果担心隐私问题，不赋予权限也是可以用的！
 
 ### 使用方法
