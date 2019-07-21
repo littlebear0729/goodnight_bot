@@ -19,7 +19,7 @@ with open('./config.json', 'r+') as config_file:
 bot = telebot.TeleBot(bot_token)
 
 # custom nickname by detect userID
-custom_userid = [400521524, 407635222, 223347749, 638996316, 299143063, 459094099, 254030480, 73322551, 137105537, 557153656, 239887702]
+custom_userid = [400521524, 407635222, 223347749, 638996316, 602231778, 459094099, 254030480, 73322551, 137105537, 557153656, 239887702]
 custom_nickname = ['小熊', 'Lore酱 | ☆可爱 verified by LittleBear', '47', '47', '荔枝', 'mashiro', 'KingCapri', '柯柯', '成本', '妹抖喵喵喵喵', 'Yooooooru']
 random_stickers = ['CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI', 'CAADBQADOAYAAvjGxQrGnfgTD5nfwQI']
 sleep_reminder = ['小可爱还没有睡觉吗？', '快去睡觉了啦！', '她已经睡着了喔…', '你的小可爱已经是守夜冠军了！']
