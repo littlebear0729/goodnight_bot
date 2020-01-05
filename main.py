@@ -43,7 +43,7 @@ custom_nickname = [
     "KingCapri",
     "柯柯",
     "成本",
-    "妹抖喵喵喵喵",
+    "妹抖喵喵喵喵 the cat",
     "Yooooooru",
     "菡 | 永远喜欢 mashiro",
 ]
