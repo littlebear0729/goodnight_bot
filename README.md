@@ -8,16 +8,16 @@ Telegram bot：@goodnight_prpr_bot
 
 ### 使用方法
 搭建api环境
-> pip3 install pytelegrambotapi
+> `pip3 install pytelegrambotapi`
 
 下载源代码
-> git clone https://github.com/xhn16729/goodnight_bot.git
+> `git clone https://github.com/xhn16729/goodnight_bot.git`
 
 运行
-> python3 main.py
+> `python3 main.py`
 
 ### 进程守护
-推荐使用systemd进行进程守护，详询Google
+推荐使用 `systemd` 进行进程守护，详询Google
 
 ### bot的bug
 1. 由于服务器性能和线路原因，bot的反应速度超级慢……暂无解决方法
