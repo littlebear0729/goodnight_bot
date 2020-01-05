@@ -9,12 +9,15 @@ Telegram bot：@goodnight_prpr_bot
 
 ### 使用方法
 搭建api环境
+
  `pip3 install pytelegrambotapi`
 
 下载源代码
+
  `git clone https://github.com/xhn16729/goodnight_bot.git`
 
 运行
+
  `python3 main.py`
 
 ### 进程守护
@@ -28,7 +31,7 @@ Telegram bot：@goodnight_prpr_bot
 5. 其他的bug请tg告知 @LittleBear0729
 
 ### bot的feature
-1. 可以按照时间自动改变问好内容
-2. 可以自动删掉command（当然，这需要bot的管理员权限，这也意味着隐私问题。所以，不赋予权限也是可以用的！）
-3. 可以给你的好朋友加上昵称
+1. 可以根据时间自动改变问好内容
+2. 可以自动删掉调用bot的命令消息（当然，这需要bot的管理员权限，这也意味着隐私问题。所以，不赋予权限也是可以用的！）
+3. 可以给你的好朋友加上自定昵称
 3. ~~bug也可以变成feature不是吗~~
