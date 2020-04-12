@@ -21,6 +21,7 @@ Telegram bot：[@goodnight_prpr_bot](https://t.me/goodnight_prpr_bot)
   `python3 main.py`
 
 - 进程守护
+
   推荐使用 `systemd` 进行进程守护，详询Google
 
 ### bot的bug
