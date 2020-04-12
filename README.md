@@ -1,27 +1,27 @@
 # goodnight_bot
 ## 一个在特定群组内，不止可以道晚安的bot
 
-Telegram bot：@goodnight_prpr_bot
+Telegram bot：[@goodnight_prpr_bot](https://t.me/goodnight_prpr_bot)
 
 ~~注意：请授予机器人admin的`delete message`权限，否则自动删除命令功能将无法使用！~~
 
 当然，如果担心隐私问题，不赋予权限也是可以用的！
 
-### 使用方法
-搭建api环境
+### 自行构建
+- 搭建api环境
 
- `pip3 install pytelegrambotapi`
+  `pip3 install pytelegrambotapi`
 
-下载源代码
+- 下载源代码
 
- `git clone https://github.com/xhn16729/goodnight_bot.git`
+  `git clone https://github.com/littlebear0729/goodnight_bot.git`
 
-运行
+- 运行
 
- `python3 main.py`
+  `python3 main.py`
 
-### 进程守护
-推荐使用 `systemd` 进行进程守护，详询Google
+- 进程守护
+  推荐使用 `systemd` 进行进程守护，详询Google
 
 ### bot的bug
 1. 由于服务器性能和线路原因，bot的反应速度超级慢……暂无解决方法
