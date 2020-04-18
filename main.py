@@ -19,34 +19,19 @@ with open("./config.json", "r+") as config_file:
 bot = telebot.TeleBot(bot_token)
 
 # custom nickname by detect userID
-custom_userid = [
-    400521524,
-    407635222,
-    223347749,
-    638996316,
-    602231778,
-    459094099,
-    254030480,
-    73322551,
-    137105537,
-    557153656,
-    239887702,
-    608795358,
-]
-custom_nickname = [
-    "小熊",
-    "Lore酱 | ☆可爱 verified by LittleBear",
-    "47",
-    "47",
-    "荔枝",
-    "mashiro | 永远喜欢 菡",
-    "KingCapri",
-    "柯柯",
-    "成本",
-    "妹抖猫四",
-    "Yooooooru",
-    "菡 | 永远喜欢 mashiro",
-]
+custom_nickname = {
+    400521524: "小熊",
+    407635222: "Lore酱 | ☆可爱 verified by LittleBear",
+    223347749: "47",
+    638996316: "47",
+    602231778: "荔枝",
+    459094099: "mashiro | 永远喜欢 菡",
+    254030480: "KingCapri",
+    73322551: "柯柯",
+    137105537: "成本",
+    557153656: "妹抖猫四",
+    239887702: "Yooooooru",
+}
 random_stickers = ["CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI",
                    "CAADBQADOAYAAvjGxQrGnfgTD5nfwQI"]
 sleep_reminder = ["小可爱还没有睡觉吗？", "快去睡觉了啦！", "她已经睡着了喔…", "你的小可爱已经是守夜冠军了！"]
@@ -73,8 +58,8 @@ def get_time():
 
 
 def get_sender_name_and_id(message):
-    if message.from_user.id in custom_userid:
-        send_name = custom_nickname[custom_userid.index(message.from_user.id)]
+    if message.from_user.id in custom_nickname:
+        send_name = custom_nickname[message.from_user.id]
     else:
         send_name = str(message.from_user.first_name)
 
@@ -84,10 +69,8 @@ def get_sender_name_and_id(message):
 
 def get_reply_name_and_id(message):
     # if nickname recorded
-    if message.reply_to_message.from_user.id in custom_userid:
-        reply_name = custom_nickname[
-            custom_userid.index(message.reply_to_message.from_user.id)
-        ]
+    if message.reply_to_message.from_user.id in custom_nickname:
+        reply_name = custom_nickname[message.reply_to_message.from_user.id]
     else:
         reply_name = str(message.reply_to_message.from_user.first_name)
     reply_id = str(message.reply_to_message.from_user.id)
@@ -100,7 +83,6 @@ def echo(message):
 
 
 try:
-
     @bot.message_handler(commands=["greeting"])
     def greeting(message):
         txt = get_time()
@@ -193,6 +175,7 @@ try:
                                  txt, parse_mode="Markdown")
         # bot.delete_message(message.chat.id, message.message_id)
 
+    #inline mode
     @bot.inline_handler(func=lambda query: True)
     def query_text(inline_query):
         try:
