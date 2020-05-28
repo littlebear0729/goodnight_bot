@@ -1,3 +1,6 @@
 {
-    "bot_token": "PLACE YOUR TELEGRAM BOT TOKEN HERE"
+    "bot_token": "PLACE YOUR TELEGRAM BOT TOKEN HERE",
+
+    # See https://github.com/eternnoir/pyTelegramBotAPI#proxy
+    "bot_https_proxy": "http://127.0.0.1:8080",
 }

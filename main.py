@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import telebot
 import json
-import time
+import logging
 import random
-from telebot import types
+import time
+
+import telebot
+from telebot import types, apihelper
+
+logger = telebot.logger
+telebot.logger.setLevel(logging.DEBUG)  # Outputs debug messages to console.
 
 # read config from config.json
 with open("./config.json", "r+") as config_file:
     config = json.load(config_file)
     print("Config file load successfully:\n" + str(config))
     bot_token = config["bot_token"]
+    bot_https_proxy = config["bot_https_proxy"]
+
+# proxy setting
+if bot_https_proxy != "":
+    proxy = {'https': bot_https_proxy}
+    apihelper.proxy = proxy
 
 # bot token
 bot = telebot.TeleBot(bot_token)
@@ -112,9 +121,9 @@ try:
         else:
             # if it is a reply message
             if (
-                not message.from_user.id == message.reply_to_message.from_user.id
-                and not message.reply_to_message.from_user.username
-                == "goodnight_prpr_bot"
+                    not message.from_user.id == message.reply_to_message.from_user.id
+                    and not message.reply_to_message.from_user.username
+                            == "goodnight_prpr_bot"
             ):
                 reply_name, reply_id = get_reply_name_and_id(message)
                 if txt == "早安":
@@ -175,7 +184,8 @@ try:
                                  txt, parse_mode="Markdown")
         # bot.delete_message(message.chat.id, message.message_id)
 
-    #inline mode
+
+    # inline mode
     @bot.inline_handler(func=lambda query: True)
     def query_text(inline_query):
         try:
@@ -214,6 +224,7 @@ try:
                 )
         except Exception as e:
             print(e)
+
 
     bot.polling(none_stop=True)
 # catch exception
