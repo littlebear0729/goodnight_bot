@@ -4,8 +4,9 @@
 import json
 import logging
 import random
-import time
+from datetime import datetime
 
+import pytz
 import telebot
 from telebot import types, apihelper
 
@@ -15,9 +16,10 @@ telebot.logger.setLevel(logging.DEBUG)  # Outputs debug messages to console.
 # read config from config.json
 with open("./config.json", "r+") as config_file:
     config = json.load(config_file)
-    print("Config file load successfully:\n" + str(config))
+    logger.info("Config file load successfully:\n" + str(config))
     bot_token = config["bot_token"]
     bot_https_proxy = config["bot_https_proxy"]
+    timezone = config["timezone"]
 
 # proxy setting
 if bot_https_proxy != "":
@@ -48,8 +50,10 @@ sleep_reminder = ["小可爱还没有睡觉吗？", "快去睡觉了啦！", "�
 
 def get_time():
     # get local time
-    c_time = time.time() + 28800
-    c_time = int(c_time % 86400 // 3600)
+    cst_tz = pytz.timezone(timezone)
+    now_time = datetime.now().replace(tzinfo=cst_tz)
+    logger.debug("now time: " + now_time.strftime("%Y-%m-%d %H:%M:%S"))
+    c_time = now_time.now().hour
     # change greeting text depend on time
     if 0 <= c_time < 4:
         greetings_type = "睡觉"
@@ -88,7 +92,7 @@ def get_reply_name_and_id(message):
 
 @bot.message_handler(content_types=["document", "audio", "photo", "sticker", "audio"])
 def echo(message):
-    print(message)
+    logger.debug(message)
 
 
 try:
@@ -188,7 +192,7 @@ try:
     @bot.inline_handler(func=lambda query: True)
     def query_text(inline_query):
         try:
-            print(inline_query)
+            logger.debug(inline_query)
             send_name, from_id = get_sender_name_and_id(inline_query)
             greetings_type = get_time()
             if greetings_type == "睡觉":
@@ -221,13 +225,13 @@ try:
                 bot.answer_inline_query(
                     inline_query.id, [inline_greeting_results], cache_time=0, is_personal=False
                 )
-        except Exception as e:
-            print(e)
+        except Exception as exception:
+            logger.error(exception)
 
 
     bot.polling(none_stop=True)
 # catch exception
 except KeyboardInterrupt:
     quit()
-except Exception as e:
-    print(str(e))
+except Exception as exception:
+    logger.error(exception)
