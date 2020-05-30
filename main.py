@@ -52,18 +52,18 @@ def get_time():
     c_time = int(c_time % 86400 // 3600)
     # change greeting text depend on time
     if 0 <= c_time < 4:
-        txt = "睡觉"
+        greetings_type = "睡觉"
     elif 4 <= c_time < 11:
-        txt = "早安"
+        greetings_type = "早安"
     elif 11 <= c_time < 14:
-        txt = "中午好"
+        greetings_type = "中午好"
     elif 14 <= c_time < 18:
-        txt = "下午好"
+        greetings_type = "下午好"
     elif 18 <= c_time < 22:
-        txt = "晚上好"
+        greetings_type = "晚上好"
     elif 22 <= c_time < 24:
-        txt = "晚安"
-    return txt
+        greetings_type = "晚安"
+    return greetings_type
 
 
 def get_sender_name_and_id(message):
@@ -94,12 +94,12 @@ def echo(message):
 try:
     @bot.message_handler(commands=["greeting"])
     def greeting(message):
-        txt = get_time()
+        greetings_type = get_time()
         send_name, from_id = get_sender_name_and_id(message)
 
         # if not reply to anyone
-        if message.reply_to_message == None:
-            if txt == "睡觉":
+        if message.reply_to_message is None:
+            if greetings_type == "睡觉":
                 randNum = random.randint(0, 100)
                 if randNum % 5 == 0:
                     bot.send_message(
@@ -111,53 +111,52 @@ try:
                     )
                     bot.send_document(
                         message.chat.id, "CgADBQADkAADdcmxV9tAyTZinfacAg")
-                    txt = "晚安"
+                    greetings_type = "晚安"
                 else:
-                    txt = "晚安"
-            txt = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
-                send_name=send_name, from_id=from_id, txt=txt
+                    greetings_type = "晚安"
+            greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
+                send_name=send_name, from_id=from_id, txt=greetings_type
             )
-            bot.send_message(message.chat.id, txt, parse_mode="Markdown")
+            bot.send_message(message.chat.id, greetings_type, parse_mode="Markdown")
         else:
             # if it is a reply message
             if (
                     not message.from_user.id == message.reply_to_message.from_user.id
-                    and not message.reply_to_message.from_user.username
-                            == "goodnight_prpr_bot"
+                    and not message.reply_to_message.from_user.username == "goodnight_prpr_bot"
             ):
                 reply_name, reply_id = get_reply_name_and_id(message)
-                if txt == "早安":
+                if greetings_type == "早安":
                     randNum = random.randint(0, 100)
                     if randNum % 5 == 0:
                         bot.send_sticker(
                             message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI"
                         )
-                        txt = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～".format(
+                        greetings_type = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～".format(
                             reply_name=reply_name,
                             reply_id=reply_id,
                             send_name=send_name,
                             from_id=from_id,
                         )
                     else:
-                        txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(
+                        greetings_type = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(
                             send_name=send_name,
                             from_id=from_id,
                             reply_name=reply_name,
                             reply_id=reply_id,
-                            txt=txt,
+                            txt=greetings_type,
                         )
                         # send reply and delete command message
                         bot.reply_to(
-                            message.reply_to_message, txt, parse_mode="Markdown"
+                            message.reply_to_message, greetings_type, parse_mode="Markdown"
                         )
-                elif txt == "睡觉":
+                elif greetings_type == "睡觉":
                     randNum = random.randint(0, 100)
                     if randNum % 5 == 0:
                         randReminder = random.randint(
                             0, len(sleep_reminder) - 1)
-                        txt = sleep_reminder[randReminder]
+                        greetings_type = sleep_reminder[randReminder]
                     else:
-                        txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 晚安～".format(
+                        greetings_type = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 晚安～".format(
                             send_name=send_name,
                             from_id=from_id,
                             reply_name=reply_name,
@@ -165,23 +164,23 @@ try:
                         )
                     # send reply and delete command message
                     bot.reply_to(message.reply_to_message,
-                                 txt, parse_mode="Markdown")
+                                 greetings_type, parse_mode="Markdown")
                 else:
                     randNum = random.randint(0, 100)
                     if randNum % 5 == 0:
                         randStick = random.randint(0, len(random_stickers) - 1)
                         bot.send_sticker(
                             message.chat.id, random_stickers[randStick])
-                    txt = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(
+                    greetings_type = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(
                         send_name=send_name,
                         from_id=from_id,
                         reply_name=reply_name,
                         reply_id=reply_id,
-                        txt=txt,
+                        txt=greetings_type,
                     )
                     # send reply and delete command message
                     bot.reply_to(message.reply_to_message,
-                                 txt, parse_mode="Markdown")
+                                 greetings_type, parse_mode="Markdown")
         # bot.delete_message(message.chat.id, message.message_id)
 
 
@@ -191,36 +190,36 @@ try:
         try:
             print(inline_query)
             send_name, from_id = get_sender_name_and_id(inline_query)
-            txt = get_time()
-            if txt == "睡觉":
-                txt = "晚安"
-            txt1 = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
-                send_name=send_name, from_id=from_id, txt=txt
+            greetings_type = get_time()
+            if greetings_type == "睡觉":
+                greetings_type = "晚安"
+            message_text = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
+                send_name=send_name, from_id=from_id, txt=greetings_type
             )
-            greeting1 = types.InlineQueryResultArticle(
+            inline_greeting_results = types.InlineQueryResultArticle(
                 "1", "向大家问好", types.InputTextMessageContent(
-                    txt1, parse_mode="Markdown")
+                    message_text, parse_mode="Markdown")
             )
             if len(inline_query.query) != 0:
                 if inline_query.query[0] == "@":
-                    txt2 = "{send_name} 向 {reply_name} 道 {txt}～".format(
-                        send_name=send_name, reply_name=inline_query.query, txt=txt
+                    inline_greeting_results_text = "{send_name} 向 {reply_name} 道 {txt}～".format(
+                        send_name=send_name, reply_name=inline_query.query, txt=greetings_type
                     )
-                    greeting2 = types.InlineQueryResultArticle(
+                    inline_greeting_results_with_someone = types.InlineQueryResultArticle(
                         "2",
                         "向{reply_name}问好".format(
                             reply_name=inline_query.query),
-                        types.InputTextMessageContent(txt2),
+                        types.InputTextMessageContent(inline_greeting_results_text),
                     )
                     bot.answer_inline_query(
                         inline_query.id,
-                        [greeting1, greeting2],
+                        [inline_greeting_results, inline_greeting_results_with_someone],
                         cache_time=0,
                         is_personal=False,
                     )
             else:
                 bot.answer_inline_query(
-                    inline_query.id, [greeting1], cache_time=0, is_personal=False
+                    inline_query.id, [inline_greeting_results], cache_time=0, is_personal=False
                 )
         except Exception as e:
             print(e)
