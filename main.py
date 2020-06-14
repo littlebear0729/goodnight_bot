@@ -6,6 +6,7 @@ import logging
 import random
 from datetime import datetime
 
+import sqlite3
 import pytz
 import telebot
 from telebot import types, apihelper
@@ -52,6 +53,11 @@ def get_time():
     # get local time
     cst_tz = pytz.timezone(timezone)
     now_time = datetime.now().replace(tzinfo=cst_tz)
+    return now_time
+
+
+def get_time_type():
+    now_time = get_time()
     logger.debug("now time: " + now_time.strftime("%Y-%m-%d %H:%M:%S"))
     c_time = now_time.now().hour
     # change greeting text depend on time
@@ -90,6 +96,69 @@ def get_reply_name_and_id(message):
     return reply_name, reply_id
 
 
+"""
+init_sqlite_db 
+ID(INT): user telegram id
+NAME(TEXT): telegram nick name
+GREETINGS_TYPE(TEXT): greetings type
+GREETINGS_TIME(DATETIME): greetings time
+"""
+
+
+def init_sqlite_db():
+    # sqlite connect
+    conn = sqlite3.connect('goodnight_bot.db')
+    logger.info("Opened database successfully")
+    conn.execute(
+        '''
+        CREATE TABLE GOODNIGHT_LIST
+           (ID                    INTEGER       PRIMARY KEY ,
+           NAME                   TEXT                      ,
+           GREETINGS_TYPE         TEXT                      ,
+           TIME_YEAR              INTEGER                      ,
+           TIME_MONTH             INTEGER                      ,
+           TIME_DAY               INTEGER                      ,
+           TIME_HOUR              INTEGER                      ,
+           TIME_MINUTE            INTEGER                      ,
+           TIME_SECOND            INTEGER                      
+           );
+        '''
+    )
+    logger.info("Table init successfully")
+    conn.close()
+
+
+def update_user(from_id, send_name, greetings_type):
+    # sqlite connect
+    conn = sqlite3.connect('goodnight_bot.db')
+    cur = conn.cursor()
+    logger.info("Opened database successfully")
+    sql = (
+        '''
+        REPLACE INTO 'GOODNIGHT_LIST' (
+        'ID', 'NAME', 'GREETINGS_TYPE', 
+        'TIME_YEAR', 'TIME_MONTH', 'TIME_DAY', 'TIME_HOUR', 'TIME_MINUTE', 'TIME_SECOND'
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+        '''
+    )
+    now_time = get_time().now()
+    para = (from_id, send_name, greetings_type,
+            now_time.year, now_time.month, now_time.day, now_time.hour, now_time.minute, now_time.second)
+    cur.execute(sql, para)
+    conn.commit()
+    # logger.debug(sql, para)
+    logger.info("db update complete.")
+    conn.close()
+
+
+try:
+    logger.info("init db file")
+    init_sqlite_db()
+except Exception as exception:
+    logger.error(exception)
+
+
 @bot.message_handler(content_types=["document", "audio", "photo", "sticker", "audio"])
 def echo(message):
     logger.debug(message)
@@ -98,8 +167,9 @@ def echo(message):
 try:
     @bot.message_handler(commands=["greeting"])
     def greeting(message):
-        greetings_type = get_time()
+        greetings_type = get_time_type()
         send_name, from_id = get_sender_name_and_id(message)
+        update_user(from_id, send_name, greetings_type)
 
         # if not reply to anyone
         if message.reply_to_message is None:
@@ -150,9 +220,9 @@ try:
                             txt=greetings_type,
                         )
                         # send reply and delete command message
-                        bot.reply_to(
-                            message.reply_to_message, greetings_type, parse_mode="Markdown"
-                        )
+                    bot.reply_to(
+                        message.reply_to_message, greetings_type, parse_mode="Markdown"
+                    )
                 elif greetings_type == "睡觉":
                     randNum = random.randint(0, 100)
                     if randNum % 5 == 0:
@@ -194,7 +264,8 @@ try:
         try:
             logger.debug(inline_query)
             send_name, from_id = get_sender_name_and_id(inline_query)
-            greetings_type = get_time()
+            greetings_type = get_time_type()
+            update_user(from_id, send_name, greetings_type)
             if greetings_type == "睡觉":
                 greetings_type = "晚安"
             message_text = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
