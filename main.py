@@ -4,9 +4,10 @@
 import json
 import logging
 import random
+import sqlite3
+import time
 from datetime import datetime
 
-import sqlite3
 import pytz
 import telebot
 from telebot import types, apihelper
@@ -115,12 +116,8 @@ def init_sqlite_db():
            (ID                    INTEGER       PRIMARY KEY ,
            NAME                   TEXT                      ,
            GREETINGS_TYPE         TEXT                      ,
-           TIME_YEAR              INTEGER                      ,
-           TIME_MONTH             INTEGER                      ,
-           TIME_DAY               INTEGER                      ,
-           TIME_HOUR              INTEGER                      ,
-           TIME_MINUTE            INTEGER                      ,
-           TIME_SECOND            INTEGER                      
+           DATE                   TEXT                      ,
+           TIME                   TEXT                              
            );
         '''
     )
@@ -137,19 +134,53 @@ def update_user(from_id, send_name, greetings_type):
         '''
         REPLACE INTO 'GOODNIGHT_LIST' (
         'ID', 'NAME', 'GREETINGS_TYPE', 
-        'TIME_YEAR', 'TIME_MONTH', 'TIME_DAY', 'TIME_HOUR', 'TIME_MINUTE', 'TIME_SECOND'
+        'DATE', 'TIME'
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+        VALUES (?, ?, ?, ?, ?);
         '''
     )
-    now_time = get_time().now()
+    now_date = time.strftime("%Y-%m-%d", time.localtime())
+    now_time = time.strftime("%H:%M:%S", time.localtime())
     para = (from_id, send_name, greetings_type,
-            now_time.year, now_time.month, now_time.day, now_time.hour, now_time.minute, now_time.second)
+            now_date, now_time)
     cur.execute(sql, para)
     conn.commit()
     # logger.debug(sql, para)
     logger.info("db update complete.")
     conn.close()
+
+
+def select_user(from_id):
+    conn = sqlite3.connect('goodnight_bot.db')
+    cur = conn.cursor()
+    logger.info("Opened database successfully")
+    sql = (
+        '''
+        select ID,
+        NAME,
+        GREETINGS_TYPE,
+        DATE,
+        TIME 
+        from GOODNIGHT_LIST
+        WHERE ID=?
+        '''
+    )
+    cur.execute(sql, (from_id,))
+    result = cur.fetchall()
+    return result
+
+
+def calculate_sleeping_interval(rows):
+    if len(rows) > 0:
+        result = rows[0]
+        ID = result[0]
+        NAME = result[1]
+        GREETINGS_TYPE = result[2]
+        DATE: str = result[3]
+        TIME: str = result[4]
+        time_string: str = "" + DATE + " " + TIME
+        interval = (datetime.now() - datetime.strptime(time_string, "%Y-%m-%d %H:%M:%S"))
+        return interval
 
 
 try:
@@ -169,11 +200,11 @@ try:
     def greeting(message):
         greetings_type = get_time_type()
         send_name, from_id = get_sender_name_and_id(message)
-        update_user(from_id, send_name, greetings_type)
 
         # if not reply to anyone
         if message.reply_to_message is None:
             if greetings_type == "睡觉":
+                update_user(from_id, send_name, greetings_type)
                 randNum = random.randint(0, 100)
                 if randNum % 5 == 0:
                     bot.send_message(
@@ -188,10 +219,23 @@ try:
                     greetings_type = "晚安"
                 else:
                     greetings_type = "晚安"
-            greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
-                send_name=send_name, from_id=from_id, txt=greetings_type
-            )
-            bot.send_message(message.chat.id, greetings_type, parse_mode="Markdown")
+                greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
+                    send_name=send_name, from_id=from_id, txt=greetings_type
+                )
+                bot.send_message(message.chat.id, greetings_type, parse_mode="Markdown")
+            if greetings_type == "早安":
+                result = select_user(from_id)
+                interval = None
+                if len(result) > 0:
+                    interval = calculate_sleeping_interval(result)
+                if interval is not None:
+                    greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～昨晚一共睡了{interval}小时哦～".format(
+                        send_name=send_name,
+                        from_id=from_id,
+                        txt=greetings_type,
+                        interval=interval,
+                    )
+                bot.send_message(message.chat.id, greetings_type, parse_mode="Markdown")
         else:
             # if it is a reply message
             if (
@@ -200,30 +244,54 @@ try:
             ):
                 reply_name, reply_id = get_reply_name_and_id(message)
                 if greetings_type == "早安":
+                    result = select_user(from_id)
+                    interval = None
+                    if len(result) > 0:
+                        interval = calculate_sleeping_interval(result)
                     randNum = random.randint(0, 100)
                     if randNum % 5 == 0:
                         bot.send_sticker(
                             message.chat.id, "CAADBQADGgUAAvjGxQrFBpd8WnW-TwI"
                         )
-                        greetings_type = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～".format(
-                            reply_name=reply_name,
-                            reply_id=reply_id,
-                            send_name=send_name,
-                            from_id=from_id,
-                        )
+                        if interval is not None:
+                            greetings_type = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～昨晚一共睡了{interval}小时哦～".format(
+                                reply_name=reply_name,
+                                reply_id=reply_id,
+                                send_name=send_name,
+                                from_id=from_id,
+                                interval=interval,
+                            )
+                        else:
+                            greetings_type = "[{reply_name}](tg://user?id={reply_id})～ [{send_name}](tg://user?id={from_id}) 爱你哦～".format(
+                                reply_name=reply_name,
+                                reply_id=reply_id,
+                                send_name=send_name,
+                                from_id=from_id,
+                            )
                     else:
-                        greetings_type = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(
-                            send_name=send_name,
-                            from_id=from_id,
-                            reply_name=reply_name,
-                            reply_id=reply_id,
-                            txt=greetings_type,
-                        )
+                        if interval is not None:
+                            greetings_type = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～昨晚一共睡了{interval}小时哦～".format(
+                                send_name=send_name,
+                                from_id=from_id,
+                                reply_name=reply_name,
+                                reply_id=reply_id,
+                                txt=greetings_type,
+                                interval=interval,
+                            )
+                        else:
+                            greetings_type = "[{send_name}](tg://user?id={from_id}) 向 [{reply_name}](tg://user?id={reply_id}) 道 {txt}～".format(
+                                send_name=send_name,
+                                from_id=from_id,
+                                reply_name=reply_name,
+                                reply_id=reply_id,
+                                txt=greetings_type,
+                            )
                         # send reply and delete command message
                     bot.reply_to(
                         message.reply_to_message, greetings_type, parse_mode="Markdown"
                     )
                 elif greetings_type == "睡觉":
+                    update_user(from_id, send_name, greetings_type)
                     randNum = random.randint(0, 100)
                     if randNum % 5 == 0:
                         randReminder = random.randint(
@@ -267,6 +335,7 @@ try:
             greetings_type = get_time_type()
             update_user(from_id, send_name, greetings_type)
             if greetings_type == "睡觉":
+                update_user(from_id, send_name, greetings_type)
                 greetings_type = "晚安"
             message_text = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
                 send_name=send_name, from_id=from_id, txt=greetings_type
