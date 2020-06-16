@@ -107,72 +107,81 @@ GREETINGS_TIME(DATETIME): greetings time
 
 
 def init_sqlite_db():
-    # sqlite connect
-    conn = sqlite3.connect('goodnight_bot.db')
-    logger.info("Opened database successfully")
-    conn.execute(
-        '''
-        CREATE TABLE GOODNIGHT_LIST
-           (ID                    INTEGER       PRIMARY KEY ,
-           NAME                   TEXT                      ,
-           GREETINGS_TYPE         TEXT                      ,
-           DATE                   TEXT                      ,
-           TIME                   TEXT                              
-           );
-        '''
-    )
-    logger.info("Table init successfully")
-    conn.close()
+    try:
+        # sqlite connect
+        conn = sqlite3.connect('goodnight_bot.db')
+        logger.info("Opened database successfully")
+        conn.execute(
+            '''
+            CREATE TABLE GOODNIGHT_LIST
+               (ID                    INTEGER       PRIMARY KEY ,
+               NAME                   TEXT                      ,
+               GREETINGS_TYPE         TEXT                      ,
+               DATE                   TEXT                      ,
+               TIME                   TEXT                              
+               );
+            '''
+        )
+        logger.info("Table init successfully")
+        conn.close()
+    except Exception as exception:
+        logger.error(exception)
 
 
 def update_user(from_id, send_name, greetings_type):
-    # sqlite connect
-    conn = sqlite3.connect('goodnight_bot.db')
-    cur = conn.cursor()
-    logger.info("Opened database successfully")
-    sql = (
-        '''
-        REPLACE INTO 'GOODNIGHT_LIST' (
-        'ID', 'NAME', 'GREETINGS_TYPE', 
-        'DATE', 'TIME'
-        )
-        VALUES (?, ?, ?, ?, ?);
-        '''
-    )
     now_date = time.strftime("%Y-%m-%d", time.localtime())
     now_time = time.strftime("%H:%M:%S", time.localtime())
-    para = (from_id, send_name, greetings_type,
-            now_date, now_time)
-    cur.execute(sql, para)
-    conn.commit()
-    # logger.debug(sql, para)
-    logger.info("db update complete.")
-    conn.close()
+    # sqlite connect
+    try:
+        conn = sqlite3.connect('goodnight_bot.db')
+        cur = conn.cursor()
+        logger.info("Opened database successfully")
+        sql = (
+            '''
+            REPLACE INTO 'GOODNIGHT_LIST' (
+            'ID', 'NAME', 'GREETINGS_TYPE', 
+            'DATE', 'TIME'
+            )
+            VALUES (?, ?, ?, ?, ?);
+            '''
+        )
+        para = (from_id, send_name, greetings_type,
+                now_date, now_time)
+        cur.execute(sql, para)
+        conn.commit()
+        conn.close()
+        # logger.debug(sql, para)
+        logger.info("db update complete.")
+    except Exception as exception:
+        logger.error(exception)
 
 
-def select_user(from_id):
-    conn = sqlite3.connect('goodnight_bot.db')
-    cur = conn.cursor()
-    logger.info("Opened database successfully")
-    sql = (
-        '''
-        select ID,
-        NAME,
-        GREETINGS_TYPE,
-        DATE,
-        TIME 
-        from GOODNIGHT_LIST
-        WHERE ID=?
-        '''
-    )
-    cur.execute(sql, (from_id,))
-    result = cur.fetchall()
+def select_user_one(from_id):
+    result = None
+    try:
+        conn = sqlite3.connect('goodnight_bot.db')
+        cur = conn.cursor()
+        logger.info("Opened database successfully")
+        sql = (
+            '''
+            select ID,
+            NAME,
+            GREETINGS_TYPE,
+            DATE,
+            TIME 
+            from GOODNIGHT_LIST
+            WHERE ID=?
+            '''
+        )
+        cur.execute(sql, (from_id,))
+        result = cur.fetchall()[0]
+    except Exception as exception:
+        logger.error(exception)
     return result
 
 
-def calculate_sleeping_interval(rows):
-    if len(rows) > 0:
-        result = rows[0]
+def calculate_sleeping_interval(result):
+    if len(result) > 0:
         ID = result[0]
         NAME = result[1]
         GREETINGS_TYPE = result[2]
@@ -183,11 +192,7 @@ def calculate_sleeping_interval(rows):
         return interval
 
 
-try:
-    logger.info("init db file")
-    init_sqlite_db()
-except Exception as exception:
-    logger.error(exception)
+init_sqlite_db()
 
 
 @bot.message_handler(content_types=["document", "audio", "photo", "sticker", "audio"])
@@ -224,7 +229,7 @@ try:
                 )
                 bot.send_message(message.chat.id, greetings_type, parse_mode="Markdown")
             elif greetings_type == "早安":
-                result = select_user(from_id)
+                result = select_user_one(from_id)
                 interval = calculate_sleeping_interval(result)
                 if (interval is not None) and (interval < timedelta(hours=12)):
                     greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～她昨晚一共睡了 {interval} 哦～".format(
