@@ -1,2 +1,2 @@
 pytelegrambotapi
-pytz~=2020.1
+pytz
