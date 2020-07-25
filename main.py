@@ -31,6 +31,7 @@ custom_nickname = {
     137105537: "成本",
     557153656: "妹抖猫四",
     239887702: "Yooooooru",
+    578175532: "蕾蕾",
 }
 random_stickers = ["CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI",
                    "CAADBQADOAYAAvjGxQrGnfgTD5nfwQI"]
