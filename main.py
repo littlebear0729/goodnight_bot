@@ -182,15 +182,16 @@ def select_user_one(from_id):
 
 
 def calculate_sleeping_interval(result):
-    if len(result) > 0:
-        ID = result[0]
-        NAME = result[1]
-        GREETINGS_TYPE = result[2]
-        DATE: str = result[3]
-        TIME: str = result[4]
-        time_string: str = "" + DATE + " " + TIME
-        interval = (datetime.now() - datetime.strptime(time_string, "%Y-%m-%d %H:%M:%S"))
-        return interval
+    if result is not None:
+        if len(result) > 0:
+            ID = result[0]
+            NAME = result[1]
+            GREETINGS_TYPE = result[2]
+            DATE: str = result[3]
+            TIME: str = result[4]
+            time_string: str = "" + DATE + " " + TIME
+            interval = (datetime.now() - datetime.strptime(time_string, "%Y-%m-%d %H:%M:%S"))
+            return interval
 
 
 init_sqlite_db()
@@ -232,13 +233,20 @@ try:
             elif greetings_type == "早安":
                 result = select_user_one(from_id)
                 interval = calculate_sleeping_interval(result)
-                if (interval is not None) and (interval < timedelta(hours=12)):
-                    greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～她昨晚一共睡了 {interval} 哦～".format(
-                        send_name=send_name,
-                        from_id=from_id,
-                        txt=greetings_type,
-                        interval=interval - timedelta(microseconds=interval.microseconds),
-                    )
+                if interval is not None:
+                    if interval < timedelta(hours=12):
+                        greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～她昨晚一共睡了 {interval} 哦～".format(
+                            send_name=send_name,
+                            from_id=from_id,
+                            txt=greetings_type,
+                            interval=interval - timedelta(microseconds=interval.microseconds),
+                        )
+                    else:
+                        greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～但离上次打卡已经超过12小时了哦～".format(
+                            send_name=send_name,
+                            from_id=from_id,
+                            txt=greetings_type,
+                        )
                 else:
                     greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～但昨晚忘记了打卡～".format(
                         send_name=send_name,
