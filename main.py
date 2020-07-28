@@ -336,7 +336,7 @@ try:
             send_name, from_id = get_sender_name_and_id(inline_query)
             greetings_type = get_time_type()
             update_user(from_id, send_name, greetings_type)
-            if greetings_type == "睡觉":
+            if greetings_type == "睡觉" or greetings_type == "晚安":
                 update_user(from_id, send_name, greetings_type)
                 greetings_type = "晚安"
             message_text = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
