@@ -210,7 +210,7 @@ try:
 
         # if not reply to anyone
         if message.reply_to_message is None:
-            if greetings_type == "睡觉":
+            if greetings_type == "睡觉" or greetings_type == "晚安":
                 update_user(from_id, send_name, greetings_type)
                 randNum = random.randint(0, 100)
                 if randNum % 5 == 0:
