@@ -48,7 +48,7 @@ custom_nickname = {
 }
 random_stickers = ["CAADBQADvgYAAvjGxQoD_y6N-wJ3BwI",
                    "CAADBQADOAYAAvjGxQrGnfgTD5nfwQI"]
-sleep_reminder = ["小可爱还没有睡觉吗？", "快去睡觉了啦！", "她已经睡着了喔…", "你的小可爱已经是守夜冠军了！"]
+sleep_reminder = ["小可爱还没有睡觉吗？", "快去睡觉了啦！", "她已经睡着了喔…"]
 
 
 def get_time():
@@ -212,20 +212,7 @@ try:
         if message.reply_to_message is None:
             if greetings_type == "睡觉" or greetings_type == "晚安":
                 update_user(from_id, send_name, greetings_type)
-                randNum = random.randint(0, 100)
-                if randNum % 5 == 0:
-                    bot.send_message(
-                        message.chat.id,
-                        "下面我宣布！[{send_name}](tg://user?id={from_id}) 是守夜冠军啦！".format(
-                            send_name=send_name, from_id=from_id
-                        ),
-                        parse_mode="Markdown",
-                    )
-                    bot.send_document(
-                        message.chat.id, "CgADBQADkAADdcmxV9tAyTZinfacAg")
-                    greetings_type = "晚安"
-                else:
-                    greetings_type = "晚安"
+                greetings_type = "晚安"
                 greetings_type = "[{send_name}](tg://user?id={from_id}) 向 大家 道 {txt}～".format(
                     send_name=send_name, from_id=from_id, txt=greetings_type
                 )
