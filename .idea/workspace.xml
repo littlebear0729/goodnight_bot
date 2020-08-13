@@ -20,7 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e743cd3-1a09-4e5c-b8da-36157c687784" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +45,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="http.proxy" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -114,8 +113,17 @@
       <workItem from="1595927945040" duration="575000" />
       <workItem from="1595928534427" duration="185000" />
       <workItem from="1595928737205" duration="40000" />
-      <workItem from="1595928790711" duration="216000" />
+      <workItem from="1595928790711" duration="436000" />
+      <workItem from="1596032719248" duration="9000" />
     </task>
+    <task id="LOCAL-00001" summary="Clean all files">
+      <created>1595929148941</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1595929148941</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +141,10 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Clean all files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean all files" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="2555" y="186" width="1280" height="1047" key="#Project_Structure" timestamp="1595927839407">
       <screen x="1920" y="0" width="2560" height="1440" />
@@ -142,26 +154,34 @@
       <screen x="1920" y="0" width="2560" height="1440" />
     </state>
     <state x="2654" y="361" width="1214" height="698" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595928849633" />
-    <state width="2504" height="357" key="GridCell.Tab.0.bottom" timestamp="1595928973983">
+    <state x="2645" y="188" width="1100" height="1043" key="CommitChangelistDialog2" timestamp="1595929148801">
       <screen x="1920" y="0" width="2560" height="1440" />
     </state>
-    <state width="2504" height="357" key="GridCell.Tab.0.bottom/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595928973983" />
-    <state width="2504" height="357" key="GridCell.Tab.0.center" timestamp="1595928973983">
+    <state x="2645" y="188" width="1100" height="1043" key="CommitChangelistDialog2/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929148801" />
+    <state width="2504" height="357" key="GridCell.Tab.0.bottom" timestamp="1595929226349">
       <screen x="1920" y="0" width="2560" height="1440" />
     </state>
-    <state width="2504" height="357" key="GridCell.Tab.0.center/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595928973983" />
-    <state width="2504" height="357" key="GridCell.Tab.0.left" timestamp="1595928973983">
+    <state width="2504" height="357" key="GridCell.Tab.0.bottom/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929226349" />
+    <state width="2504" height="357" key="GridCell.Tab.0.center" timestamp="1595929226348">
       <screen x="1920" y="0" width="2560" height="1440" />
     </state>
-    <state width="2504" height="357" key="GridCell.Tab.0.left/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595928973983" />
-    <state width="2504" height="357" key="GridCell.Tab.0.right" timestamp="1595928973983">
+    <state width="2504" height="357" key="GridCell.Tab.0.center/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929226348" />
+    <state width="2504" height="357" key="GridCell.Tab.0.left" timestamp="1595929226348">
       <screen x="1920" y="0" width="2560" height="1440" />
     </state>
-    <state width="2504" height="357" key="GridCell.Tab.0.right/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595928973983" />
-    <state x="2564" y="258" key="SettingsEditor" timestamp="1595927823147">
+    <state width="2504" height="357" key="GridCell.Tab.0.left/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929226348" />
+    <state width="2504" height="357" key="GridCell.Tab.0.right" timestamp="1595929226348">
       <screen x="1920" y="0" width="2560" height="1440" />
     </state>
-    <state x="2564" y="258" key="SettingsEditor/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595927823147" />
+    <state width="2504" height="357" key="GridCell.Tab.0.right/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929226348" />
+    <state x="2564" y="258" key="SettingsEditor" timestamp="1595929223777">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2564" y="258" key="SettingsEditor/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929223777" />
+    <state x="2695" y="383" width="1000" height="652" key="Vcs.Push.Dialog.v2" timestamp="1595929152881">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2695" y="383" width="1000" height="652" key="Vcs.Push.Dialog.v2/1920.0.2560.1440/0.42.1920.1038@1920.0.2560.1440" timestamp="1595929152881" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/goodnight_bot$main.coverage" NAME="main Coverage Results" MODIFIED="1595929025612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
